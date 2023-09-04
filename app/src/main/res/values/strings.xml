@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">planet2pop</string>
+    <string name="reload">Reload</string>
+    <string name="quit">Quit</string>
 </resources>

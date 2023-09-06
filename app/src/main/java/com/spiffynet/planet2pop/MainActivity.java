@@ -4,30 +4,33 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private WebView mywebView;
     private SwipeRefreshLayout swipeRefreshLayout;
-
+    private EditText usernameEditText;
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         String url = "https://ps2.live/";
 
-        setContentView(R.layout.activity_main);
         mywebView = findViewById(R.id.webview);
         mywebView.setWebViewClient(new WebViewClient());
         mywebView.loadUrl(url);
@@ -55,13 +58,45 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        // reload
         if (item.getItemId() == R.id.reload) {
             mywebView.reload();
             Toast.makeText(MainActivity.this, "Reload", Toast.LENGTH_SHORT).show();
-        } else if(item.getItemId() == R.id.quit) {
+        }
+        // quit
+        else if(item.getItemId() == R.id.quit) {
             System.exit(0);
-        } else {
-            return super.onOptionsItemSelected(item);
+        }
+        // user_search
+        else if(item.getItemId() == R.id.user_search) {
+            setContentView(R.layout.get_user);
+            Toast.makeText(MainActivity.this, "User Search", Toast.LENGTH_SHORT).show();
+            usernameEditText = findViewById(R.id.user_name);
+            Button searchButton = findViewById(R.id.search_button);
+            searchButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String username = usernameEditText.getText().toString();
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://ps2.fisu.pw/player/?name=" + username));
+
+                    startActivity(browserIntent);
+
+
+                    setContentView(R.layout.activity_main);
+                    mywebView.setWebViewClient(new WebViewClient());
+                    mywebView.reload();
+
+                }
+
+            });
+
+
+
+        }
+        // other options
+        else {
+                return super.onOptionsItemSelected(item);
         }
         return true;
     }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         String url = "https://ps2.live/";
 
         mywebView = findViewById(R.id.webview);
-        mywebView.setWebViewClient(new WebViewClient());
+        mywebView.setWebChromeClient(new WebChromeClient());
         mywebView.loadUrl(url);
         WebSettings webSettings = mywebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -69,28 +70,12 @@ public class MainActivity extends AppCompatActivity {
         }
         // user_search
         else if(item.getItemId() == R.id.user_search) {
-            setContentView(R.layout.get_user);
+//            setContentView(R.layout.get_user);
             Toast.makeText(MainActivity.this, "User Search", Toast.LENGTH_SHORT).show();
             usernameEditText = findViewById(R.id.user_name);
-            Button searchButton = findViewById(R.id.search_button);
-            searchButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    String username = usernameEditText.getText().toString();
-                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://ps2.fisu.pw/player/?name=" + username));
-                    // TODO: Fix. Must restart after using User Search
-                    startActivity(browserIntent);
-                    Toast.makeText(MainActivity.this, "Restart planet2pop! (Problem with user search)", Toast.LENGTH_LONG).show();
-                    finish();
-
-
-                }
-
-            });
-
-
-
+            String username = usernameEditText.getText().toString();
+            String url = "https://ps2.fisu.pw/player/?name=" + username;
+            mywebView.loadUrl(url);
         }
         // other options
         else {
@@ -98,12 +83,13 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     public void onBackPressed() {
         if (mywebView != null && mywebView.canGoBack()) {
             mywebView.goBack();
         } else {
-            super.onBackPressed();
+            super.onBackPressed();;
         }
     }
 }

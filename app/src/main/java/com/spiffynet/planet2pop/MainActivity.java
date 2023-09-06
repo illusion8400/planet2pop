@@ -1,24 +1,25 @@
 package com.spiffynet.planet2pop;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import android.view.Menu;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 public class MainActivity extends AppCompatActivity {
+
 
     private WebView mywebView;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     } // end on create
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -79,13 +79,11 @@ public class MainActivity extends AppCompatActivity {
 
                     String username = usernameEditText.getText().toString();
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://ps2.fisu.pw/player/?name=" + username));
-
+                    // TODO: Fix. Must restart after using User Search
                     startActivity(browserIntent);
+                    Toast.makeText(MainActivity.this, "Restart planet2pop! (Problem with user search)", Toast.LENGTH_LONG).show();
+                    finish();
 
-
-                    setContentView(R.layout.activity_main);
-                    mywebView.setWebViewClient(new WebViewClient());
-                    mywebView.reload();
 
                 }
 

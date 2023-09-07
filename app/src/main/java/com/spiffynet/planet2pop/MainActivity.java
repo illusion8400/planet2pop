@@ -1,17 +1,11 @@
 package com.spiffynet.planet2pop;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -21,11 +15,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-
     private WebView mywebView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText usernameEditText;
-    @SuppressLint("SetJavaScriptEnabled")
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         mywebView.setWebChromeClient(new WebChromeClient());
         mywebView.loadUrl(url);
         WebSettings webSettings = mywebView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
+
         Toast.makeText(MainActivity.this, "Loading...", Toast.LENGTH_SHORT).show();
+
         // Set up SwipeRefreshLayout for refreshing
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -49,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Reload", Toast.LENGTH_SHORT).show();
             }
         });
+    } // end onCreate
 
-    } // end on create
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

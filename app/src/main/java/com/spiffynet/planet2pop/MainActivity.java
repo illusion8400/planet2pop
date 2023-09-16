@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         if (mywebView != null && mywebView.canGoBack()) {
             mywebView.goBack();
         } else {
-            super.onBackPressed();;
+            super.onBackPressed();
         }
     }
 }
